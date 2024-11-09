@@ -10,13 +10,13 @@ const AnnouncementTabs = () => {
   const readAnnouncements = announcements.filter(a => a.read);
 
   return (
-    <div className="p-4">
-      {/* Tabs container */}
-      <div className="relative flex mb-4">
-        {/* Tab buttons with overlapping effect */}
+    <div className="flex flex-col h-[calc(100vh-64px)] pb-16"> {/* Added padding bottom for footer nav */}
+
+      {/* Tabs container - Now with fixed height */}
+      <div className="relative flex px-4 shrink-0">
         <button
           className={`relative z-10 px-6 py-2 rounded-t-lg border-t border-x 
-            flex items-center gap-2
+            flex items-center gap-2 min-w-[160px]
             ${activeTab === "unread"
               ? "bg-white -mb-px border-gray-200"
               : "bg-gray-100 border-transparent"
@@ -34,7 +34,7 @@ const AnnouncementTabs = () => {
         </button>
         <button
           className={`relative z-10 px-6 py-2 rounded-t-lg border-t border-x
-            flex items-center gap-2
+            flex items-center gap-2 min-w-[160px]
             ${activeTab === "read"
               ? "bg-white -mb-px border-gray-200"
               : "bg-gray-100 border-transparent"
@@ -52,42 +52,60 @@ const AnnouncementTabs = () => {
         </button>
       </div>
 
-      {/* Content panel with border to connect with active tab */}
-      <div className="border border-gray-200 rounded-lg rounded-tl-none bg-white p-4">
-        {activeTab === "unread" && (
-          <div>
-            {unreadAnnouncements.map(a => (
-              <AnnouncementCard
-                key={a.id}
-                title={a.title}
-                content={a.content}
-              />
-            ))}
-            {unreadAnnouncements.length === 0 && (
-              <div className="text-gray-500 text-center py-8 flex flex-col items-center gap-3">
-                <Notification size={32} variant="Bulk" className="text-gray-400" />
-                <p>No unread announcements</p>
-              </div>
-            )}
-          </div>
-        )}
-        {activeTab === "read" && (
-          <div>
-            {readAnnouncements.map(a => (
-              <AnnouncementCard
-                key={a.id}
-                title={a.title}
-                content={a.content}
-              />
-            ))}
-            {readAnnouncements.length === 0 && (
-              <div className="text-gray-500 text-center py-8 flex flex-col items-center gap-3">
-                <Notification size={32} variant="Bulk" className="text-gray-400" />
-                <p>No read announcements</p>
-              </div>
-            )}
-          </div>
-        )}
+      {/* Scrollable content panel - Now fills remaining space */}
+      <div className="flex-1 mx-2 mb-4 border border-gray-200 rounded-lg rounded-tl-none bg-white overflow-hidden">
+        <div className="h-full overflow-y-auto custom-scrollbar">
+          {activeTab === "unread" && (
+            <div className="p-4">
+              {unreadAnnouncements.map(a => (
+                <AnnouncementCard
+                  key={a.id}
+                  title={a.title}
+                  content={a.content}
+                  date={a.date}
+                  priority={a.priority}
+                  category={a.category}
+                  location={a.location}
+                  timeSlot={a.timeSlot}
+                  expectedQuantity={a.expectedQuantity}
+                  source={a.source}
+                  coordinator={a.coordinator}
+                />
+              ))}
+              {unreadAnnouncements.length === 0 && (
+                <div className="text-gray-500 text-center py-8 flex flex-col items-center gap-3">
+                  <Notification size={32} variant="Bulk" className="text-gray-400" />
+                  <p>No unread announcements</p>
+                </div>
+              )}
+            </div>
+          )}
+          {activeTab === "read" && (
+            <div className="p-4">
+              {readAnnouncements.map(a => (
+                <AnnouncementCard
+                  key={a.id}
+                  title={a.title}
+                  content={a.content}
+                  date={a.date}
+                  priority={a.priority}
+                  category={a.category}
+                  location={a.location}
+                  timeSlot={a.timeSlot}
+                  expectedQuantity={a.expectedQuantity}
+                  source={a.source}
+                  coordinator={a.coordinator}
+                />
+              ))}
+              {readAnnouncements.length === 0 && (
+                <div className="text-gray-500 text-center py-8 flex flex-col items-center gap-3">
+                  <Notification size={32} variant="Bulk" className="text-gray-400" />
+                  <p>No read announcements</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

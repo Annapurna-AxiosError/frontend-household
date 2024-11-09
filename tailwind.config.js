@@ -7,7 +7,7 @@ export default {
     extend: {
       colors: {
         primary: '#6B8E23', // Define your primary color here
-        primaryGreen: "#23878E",
+        primaryGreen: "#6B8E23",
         background: "#f3f3f3",
         secondaryGreen: "#8AC9B9",
         secondarySlate: "#D5F0E7",
