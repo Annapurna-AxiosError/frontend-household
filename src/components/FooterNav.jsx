@@ -1,4 +1,4 @@
-import { Home2, Bookmark, Box } from "iconsax-react";
+import { Home2, MessageNotif, Box } from "iconsax-react";
 import { NavLink } from "react-router-dom";
 
 function NavbarItem({ Icon, text, to }) {
@@ -26,7 +26,7 @@ export default function FooterNav() {
     <div className="h-20 fixed bottom-0 left-0 w-full flex flex-row justify-around pt-3 z-10 shadow-2xl bg-background">
       <NavbarItem Icon={Home2} text="DashBoard" to="/" />
       <NavbarItem Icon={Box} text="Campaign" to="/campaign" />
-      <NavbarItem Icon={Bookmark} text="Recipe AI" to="/recipe" />
+      <NavbarItem Icon={MessageNotif} text="Announcement" to="/announcement" />
     </div>
   );
 }

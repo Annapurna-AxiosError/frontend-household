@@ -14,7 +14,7 @@ import Logout from "../screens/Logout";
 
 import Home from "../screens/Home";
 import Campaign from "../screens/Campaign";
-import Locate from "../screens/Locate";
+import Announcement from "../screens/Announcement"
 
 import FoodDetails from "../screens/FoodDetails";
 
@@ -28,7 +28,7 @@ const router = createBrowserRouter(
         <Route Component={FooterLayout}>
           <Route index Component={Home} />
           <Route path="campaign" Component={Campaign} />
-          <Route path="Locate" Component={Locate} />
+          <Route path="announcement" Component={Announcement} />
         </Route>
         <Route path="food/:id" Component={FoodDetails} />
       </Route>
