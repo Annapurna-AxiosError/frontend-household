@@ -1,10 +1,21 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function FoodList({ items }) {
+  const history = useHistory();
+
+  const handleCardClick = (index) => {
+    history.push(`/food/${index}`);
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 pb-20">
       {items.map((item, index) => (
-        <div key={index} className="bg-background shadow-md rounded-lg overflow-hidden flex h-32">
+        <div
+          key={index}
+          className="bg-background shadow-md rounded-lg overflow-hidden flex h-32 cursor-pointer"
+          onClick={() => handleCardClick(index)}
+        >
           <div className="w-1/3">
             <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
           </div>

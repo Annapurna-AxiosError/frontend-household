@@ -31,7 +31,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="h-screen flex flex-col overflow-hidden">
       <h3 className="text-left font-cameraObscura font-bold text-[#6B8E23] p-4 ">Annapurnaa</h3>
       <h1 className="text-left font-dmSans font-bold text-3xl pl-4 pb-6">Your Family</h1>
       <div className="flex justify-end pr-4 pb-4">
@@ -39,7 +39,9 @@ export default function Home() {
           <Add size="32" color="#FFFFFF" />
         </div>
       </div>
-      {foodList.length === 0 ? <EmptyList /> : <FoodList items={foodList} />}
+      <div className="flex-1 overflow-y-auto pb-20"> {/* Add padding-bottom here */}
+        {foodList.length === 0 ? <EmptyList /> : <FoodList items={foodList} />}
+      </div>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center p-4">
