@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Camera Obscura';
+  src: local('Camera Obscura'), url(./fonts/CameraObscuraDEMO.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: local('DM Sans'), url(./fonts/DMSans-VariableFont_opsz,wght.ttf) format('truetype');
+}
+
+.dm-sans-<uniquifier> {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+}
