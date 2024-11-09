@@ -2,14 +2,15 @@
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "media",
   theme: {
     extend: {
       colors: {
-        primary_orcher: "#23AA49",
-        primary_green: "#23878E",
+        primary: '#6B8E23', // Define your primary color here
+        primaryGreen: "#23878E",
         background: "#f3f3f3",
-        secondary_green: "#8AC9B9",
-        secondary_slategray: "#D5F0E7",
+        secondaryGreen: "#8AC9B9",
+        secondarySlate: "#D5F0E7",
         accent: "#a6ef5c",
       },
       fontFamily: {
