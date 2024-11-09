@@ -1,20 +1,38 @@
-import React from 'react';
+import { useNavigate } from "react-router-dom";
+import Logo from "../assets/AnnapurnaLogo.svg";
+import LoginImage from "../assets/LoginImage.svg"
 
-export default function FoodList({ items }) {
+export default function Login() {
+  const navigate = useNavigate();
+
+  const submit = () => {
+    navigate('/');
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      {items.map((item, index) => (
-        <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden flex font-dmSans">
-          <div className="w-1/3 p-4">
-            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-            <h2 className="text-xl font-bold mt-4">{item.name}</h2>
-          </div>
-          <div className="w-2/3 p-4 flex flex-col justify-center">
-            <p className="text-gray-700 mb-2">Quantity: {item.quantity}</p>
-            <p className="text-gray-700">Quality: {item.quality}</p>
-          </div>
-        </div>
-      ))}
+    <div className="flex flex-col justify-center items-center h-screen gap-16 p-4">
+      <div className="flex flex-col w-full h-44 items-center align-middle justify-end">
+        <img src={Logo} alt="ANNAPURNAA" className="h-96 w-96 rounded-full" /> </div>
+      <div className="fiex gap-4 justify-center items-center text-center">
+        <p className="font-cameraObscura text-[#6B8E23] text-3xl">ANNAPURNAA</p>
+        <br></br>
+        <p className="font-dmSans text-sm text-foreground ">By Axios Error</p>
+      </div>
+
+      <button
+        onClick={submit}
+        className="flex items-center gap-3 p-4 outline outline-[23AA49] rounded-xl text-[23AA49]  font-bold"
+      >
+        <img
+          src="https://docs.material-tailwind.com/icons/google.svg"
+          alt="metamask"
+          className="h-6 w-6"
+        />
+        Continue with Google
+      </button>
+      {/* <div className="flex flex-col w-full h-44 items-center align-end justify-end"> */}
+      {/*   <img src={LoginImage} alt="ANNAPURNAA" className="h-96 w-96 rounded-full" /> </div> */}
+
     </div>
   );
 }

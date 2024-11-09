@@ -8,7 +8,7 @@ function NavbarItem({ Icon, text, to }) {
         <>
           <Icon
             variant={isActive ? "Bold" : "Linear"}
-            color={isActive ? "#23AA49" : "#23AA49"} // TODO: Pass from tailwind theme
+            color={isActive ? "#6B8E23" : "#6B8E23"} // TODO: Pass from tailwind theme
           />
           <span
             className={`text-xs ${isActive ? "text-primary" : "text-mute "}`}
