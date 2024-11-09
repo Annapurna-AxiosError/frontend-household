@@ -7,12 +7,13 @@ import {
 // import Protected from "../layouts/Protected";
 import FooterLayout from "../layouts/FooterLayout";
 
-import Login from "../screen/Login";
-import Logout from "../screen/Logout";
+import Login from "../screens/Login"
+import Logout from "../screens/Logout";
 
-import Home from "../screen/Home";
+import Home from "../screens/Home";
 
-import Gupshup from "../pages/Gupshup";
+import Campaign from "../screens/Campaign"
+import Recipe from "../screens/Recipe"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,11 +21,9 @@ const router = createBrowserRouter(
       {/* <Route Component={Protected}> */}
       <Route Component={FooterLayout}>
         <Route index Component={Home} />
-        <Route path="campaign" Component={SpaceList} />
-        <Route path="spaces/create" Component={SpaceForm} />
-        <Route path="gupshup" Component={Gupshup} />
+        <Route path="campaign" Component={Campaign} />
+        <Route path="recipe" Component={Recipe} />
       </Route>
-      <Route path="spaces/:id" Component={SpaceChat} />
       {/* </Route> */}
       <Route path="login" Component={Login} />
       <Route path="logout" Component={Logout} />
