@@ -5,11 +5,12 @@ import { Add } from 'iconsax-react';
 import dummyData from "../constants/dummyFood"; // Import the dummy data
 
 export default function Home() {
-  const [foodList, setFoodList] = useState(dummyData);
+  const [foodList, setFoodList] = useState(Object.values(dummyData)); // Convert dummyData object to array
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [quality, setQuality] = useState('');
+  const [showFoodList, setShowFoodList] = useState(true); // State to toggle between views
 
   const handleAddFood = (newFood) => {
     setFoodList([...foodList, newFood]);
@@ -17,7 +18,7 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAddFood({ name, quantity, quality, userImage: dummyData[0].userImage });
+    handleAddFood({ name, quantity, quality, userImage: dummyData[1].userImage });
     setIsModalOpen(false);
     setName('');
     setQuantity('');
@@ -33,7 +34,11 @@ export default function Home() {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto pb-20">
-        {foodList.length === 0 ? <EmptyList /> : <FoodList items={foodList} />}
+        {showFoodList ? (
+          foodList.length === 0 ? <EmptyList /> : <FoodList items={foodList} />
+        ) : (
+          <EmptyList />
+        )}
       </div>
 
       {isModalOpen && (

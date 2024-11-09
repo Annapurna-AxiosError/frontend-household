@@ -11,9 +11,11 @@ import HeaderLayout from "../layouts/HeaderLayout";
 // Import screens
 import Login from "../screens/Login";
 import Logout from "../screens/Logout";
+
 import Home from "../screens/Home";
 import Campaign from "../screens/Campaign";
-import Recipe from "../screens/Recipe";
+import Locate from "../screens/Locate";
+
 import FoodDetails from "../screens/FoodDetails";
 
 const router = createBrowserRouter(
@@ -26,7 +28,7 @@ const router = createBrowserRouter(
         <Route Component={FooterLayout}>
           <Route index Component={Home} />
           <Route path="campaign" Component={Campaign} />
-          <Route path="recipe" Component={Recipe} />
+          <Route path="Locate" Component={Locate} />
         </Route>
         <Route path="food/:id" Component={FoodDetails} />
       </Route>

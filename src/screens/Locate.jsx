@@ -1,4 +1,4 @@
-export default function Recipe() {
+export default function Locate() {
   return (
     <div>
       <h1>Recipe</h1>
