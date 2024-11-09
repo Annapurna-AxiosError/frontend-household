@@ -1,11 +1,14 @@
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 import FooterNav from "../components/FooterNav";
-import { Outlet } from "react-router-dom";
 
 export default function FooterLayout() {
   return (
-    <>
-      <Outlet />
-      <FooterNav />
-    </>
+    <div className="flex flex-col h-screen">
+      <div className="flex-1 mb-16">
+        <Outlet />
+      </div>
+      <FooterNav className="fixed bottom-0 w-full z-10" />
+    </div>
   );
 }

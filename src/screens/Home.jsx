@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import EmptyList from "../components/EmptyList";
 import FoodList from "../components/FoodList";
-import LogoImage from "../assets/LoginImage.svg";
 import { Add } from 'iconsax-react';
+import dummyData from "../constants/dummyFood"; // Import the dummy data
 
 export default function Home() {
-  const dummyData = [
-    { name: 'Apples', quantity: '10', quality: 'Fresh', image: LogoImage },
-    { name: 'Bananas', quantity: '6', quality: 'Ripe', image: LogoImage },
-    { name: 'Carrots', quantity: '5', quality: 'Organic', image: LogoImage },
-  ];
-
   const [foodList, setFoodList] = useState(dummyData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState('');
@@ -23,7 +17,7 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAddFood({ name, quantity, quality, image: LogoImage });
+    handleAddFood({ name, quantity, quality, userImage: dummyData[0].userImage });
     setIsModalOpen(false);
     setName('');
     setQuantity('');
@@ -32,14 +26,13 @@ export default function Home() {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
-      <h3 className="text-left font-cameraObscura font-bold text-[#6B8E23] p-4 ">Annapurnaa</h3>
       <h1 className="text-left font-dmSans font-bold text-3xl pl-4 pb-6">Your Family</h1>
       <div className="flex justify-end pr-4 pb-4">
         <div className="bg-[#6B8E23] rounded-full p-2 cursor-pointer" onClick={() => setIsModalOpen(true)}>
           <Add size="32" color="#FFFFFF" />
         </div>
       </div>
-      <div className="flex-1 overflow-y-auto pb-20"> {/* Add padding-bottom here */}
+      <div className="flex-1 overflow-y-auto pb-20">
         {foodList.length === 0 ? <EmptyList /> : <FoodList items={foodList} />}
       </div>
 

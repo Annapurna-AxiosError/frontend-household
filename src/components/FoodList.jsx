@@ -1,11 +1,10 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function FoodList({ items }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleCardClick = (index) => {
-    history.push(`/food/${index}`);
+    navigate(`/food/${index}`);
   };
 
   return (
@@ -17,7 +16,7 @@ export default function FoodList({ items }) {
           onClick={() => handleCardClick(index)}
         >
           <div className="w-1/3">
-            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+            <img src={item.userImage} alt="User" className="w-full h-full object-cover" />
           </div>
           <div className="w-2/3 p-4 flex flex-col justify-center items-end">
             <h2 className="text-xl font-marcellus text-primary">{item.name}</h2>
