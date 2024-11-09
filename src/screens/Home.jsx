@@ -10,7 +10,6 @@ export default function Home() {
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [quality, setQuality] = useState('');
-  const [showFoodList, setShowFoodList] = useState(false); // State to toggle between views
 
   const handleAddFood = (newFood) => {
     setFoodList([...foodList, newFood]);
@@ -34,11 +33,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex-1 overflow-y-auto pb-20">
-        {showFoodList ? (
-          foodList.length === 0 ? <EmptyList /> : <FoodList items={foodList} />
-        ) : (
-          <EmptyList />
-        )}
+        {foodList.length === 0 ? <EmptyList /> : <FoodList items={foodList} />}
       </div>
 
       {isModalOpen && (

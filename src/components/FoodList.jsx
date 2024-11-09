@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import dummyData from '../constants/dummyFood'; // Adjust the path as necessary
 
-export default function FoodList({ items }) {
+export default function FoodList() {
   const navigate = useNavigate();
+
+  // Convert the dummy data object into an array
+  const items = Object.values(dummyData);
 
   const handleCardClick = (index) => {
     navigate(`/food/${index}`);
@@ -35,5 +39,5 @@ FoodList.propTypes = {
       quality: PropTypes.string.isRequired,
       userImage: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
 };

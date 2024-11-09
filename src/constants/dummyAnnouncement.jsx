@@ -68,19 +68,5 @@ export const announcements = [
     expectedQuantity: "150-200 portions",
     source: "Partner Restaurants",
     coordinator: "Night Rescue Squad"
-  },
-  {
-    id: 6,
-    title: "Food Expiry Alert",
-    content: "Your listed food items are nearing their expiry date. Please check and consume or donate them as soon as possible to avoid waste.",
-    date: "2024-03-15",
-    priority: "high",
-    category: "alert",
-    read: false,
-    location: "Your Pantry",
-    timeSlot: "N/A",
-    expectedQuantity: "Varies",
-    source: "Food Inventory System",
-    coordinator: "Pantry Management Team"
   }
 ];
