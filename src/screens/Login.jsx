@@ -6,7 +6,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const submit = () => {
-    navigate('/');
+    navigate('/get-started');
   };
 
   return (

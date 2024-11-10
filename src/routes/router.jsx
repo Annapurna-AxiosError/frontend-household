@@ -11,10 +11,13 @@ import HeaderLayout from "../layouts/HeaderLayout";
 // Import screens
 import Login from "../screens/Login";
 import Logout from "../screens/Logout";
+import GetStarted from "../screens/GetStarted";
 
 import Home from "../screens/Home";
 import Campaign from "../screens/Campaign";
-import Announcement from "../screens/Announcement"
+import Announcement from "../screens/Announcement";
+
+import Locate from "../screens/Locate";
 
 import FoodDetails from "../screens/FoodDetails";
 
@@ -30,6 +33,8 @@ const router = createBrowserRouter(
           <Route path="campaign" Component={Campaign} />
           <Route path="announcement" Component={Announcement} />
         </Route>
+        <Route path="locate" Component={Locate} />
+        <Route path="get-started" Component={GetStarted} />
         <Route path="food/:id" Component={FoodDetails} />
       </Route>
     </Route>
