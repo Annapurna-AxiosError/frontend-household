@@ -6,7 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
   plugins: [react(), VitePWA({
     registerType: 'autoUpdate',
-    includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+    includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'favicon.svg'],
     manifest: {
       name: 'Annapurna',
       short_name: 'Annapurna',
