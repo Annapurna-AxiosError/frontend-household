@@ -23,20 +23,14 @@ export default function MapView() {
     async function fetchCampaigns() {
       try {
         const response = await axios.get('https://annapurna.arnabbhowmik019.workers.dev/v1/ngo/campaigns');
-        setLocations(JSON.stringify(response.data.results));
-        localStorage.setItem("locations", JSON.stringify(response.data.results));
-        setLocations(localStorage.getItem("locations"));
-         
-
+        setLocations(response.data.results);
       } catch (error) {
         console.error('Error fetching campaigns:', error);
       }
     }
     fetchCampaigns();
   }, []);
-  //object to list 
-  const locationss = JSON.parse(localStorage.getItem("locations"));
-  
+
   const handleSearch = async () => {
     try {
       const response = await axios.get('https://api.opencagedata.com/geocode/v1/json', {
@@ -107,8 +101,8 @@ export default function MapView() {
       {/* Map */}
       <div className="h-3/4 w-full">
         <MapContainer
-          center={[19.0760, 72.8777]}
-          zoom={10}
+          center={[19.2183, 72.9769]}
+          zoom={14}
           className="h-full w-full"
           zoomControl={false}
         >
@@ -116,7 +110,7 @@ export default function MapView() {
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           />
-          {locationss.map((location) => (
+          {locations.map((location) => (
             location.latitude && location.longitude && (
               <Marker
                 key={location.posting_id}
@@ -145,12 +139,12 @@ export default function MapView() {
       {selectedLocation && (
         <div className="fixed inset-0 z-[1001] flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h3 className="text-xl font-semibold mb-4 text-[#6B8E23]">{selectedLocation.campaign_title}</h3>
-            <p className="mb-2">{selectedLocation.campaign_description}</p>
-            <p className="mb-2"><strong>Food Type:</strong> {selectedLocation.food_type}</p>
-            <p className="mb-2"><strong>Quantity:</strong> {selectedLocation.total_quantity} {selectedLocation.quantity_unit}</p>
-            <p className="mb-2"><strong>Pickup Location:</strong> {selectedLocation.pickup_location}</p>
-            <p className="mb-2"><strong>Availability:</strong> {new Date(selectedLocation.availability_start_time).toLocaleString()} - {new Date(selectedLocation.availability_end_time).toLocaleString()}</p>
+            <h3 className="text-xl font-semibold mb-4 text-[#6B8E23]">{selectedLocation.campaign_title || 'No Title'}</h3>
+            <p className="mb-2">{selectedLocation.campaign_description || 'No Description'}</p>
+            <p className="mb-2"><strong>Food Type:</strong> {selectedLocation.food_type || 'Unknown'}</p>
+            <p className="mb-2"><strong>Quantity:</strong> {selectedLocation.total_quantity || 0} {selectedLocation.quantity_unit || 'Unknown'}</p>
+            <p className="mb-2"><strong>Pickup Location:</strong> {selectedLocation.pickup_location || 'Unknown'}</p>
+            <p className="mb-2"><strong>Availability:</strong> {selectedLocation.availability_start_time ? new Date(selectedLocation.availability_start_time).toLocaleString() : 'Unknown'} - {selectedLocation.availability_end_time ? new Date(selectedLocation.availability_end_time).toLocaleString() : 'Unknown'}</p>
             <button
               onClick={handleCloseModal}
               className="mt-4 bg-[#6B8E23] text-white px-4 py-2 rounded-full"
