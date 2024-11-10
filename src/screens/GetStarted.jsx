@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import axios from 'axios';
 import { Location } from 'iconsax-react';
 
@@ -7,12 +7,18 @@ export default function GetStarted() {
   const [location, setLocation] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [team_number, setTeamNumber] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic here
     console.log('Phone Number:', phoneNumber);
     console.log('Location:', location);
+    console.log('Team Number:', team_number);
+    const response=await  axios.post('https://annapurna.arnabbhowmik019.workers.dev/v1/household/update-profile', {"phone": phoneNumber, "location": location, "family_id": team_number}, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+    if(response.status===200){
+      window.location.href="/";
+    }
   };
 
   const handleLocationChange = async (e) => {
@@ -86,6 +92,19 @@ export default function GetStarted() {
             id="phoneNumber"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phoneNumber">
+            If you want to join in a Family please enter Family Number:
+          </label>
+          <input
+            type="text"
+            id="team_number"
+            value={team_number}
+            onChange={(e) => setTeamNumber(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           />

@@ -1,12 +1,29 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'iconsax-react'; // Import the back icon from IconSax
 import dummyData from "../constants/dummyFood";
+import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from 'axios';  
 
 export default function FoodDetails() {
   const { id } = useParams();
+  const [recipies , setRecipies] = useState([]);
   const navigate = useNavigate();
-  const foodItem = dummyData[id];
+  const foodItem = localStorage.getItem('filteredItems') ? JSON.parse(localStorage.getItem('filteredItems'))[id] : dummyData[id];
+  useEffect(() => {
+    async function fetchRecipie() {
+      try {
+        const response = await axios.post("https://resume-screening-2.onrender.com/recipie", { "food_item": foodItem.food_name, "quantity": foodItem.quantity });
+        setRecipies(JSON.parse(response.data));
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
+      }
+    }
 
+    if (foodItem) {
+      fetchRecipie();
+    }
+  }, [foodItem]);
   if (!foodItem) {
     return <div>Food item not found</div>;
   }
@@ -17,17 +34,25 @@ export default function FoodDetails() {
         <button onClick={() => navigate(-1)} className="flex-shrink-0">
           <ArrowLeft size="24" color="#6B8E23" />
         </button>
-        <h1 className="text-3xl font-bold text-[#6B8E23]">{foodItem.name}</h1>
+        <h1 className="text-3xl font-bold text-[#6B8E23]">{foodItem.food_name}</h1>
       </div>
       <div className="flex-1 overflow-y-auto p-4">
         <div className="text-lg">
+          <p className="font-dmSans">
+            <span className="text-[#6B8E23]">Expiry Date: </span>
+            <span className="text-black">{foodItem.expiry_date}</span>
+          </p>
           <p className="font-dmSans">
             <span className="text-[#6B8E23]">Quantity: </span>
             <span className="text-black">{foodItem.quantity}</span>
           </p>
           <p className="font-dmSans">
-            <span className="text-[#6B8E23]">Quality: </span>
-            <span className="text-black">{foodItem.quality}</span>
+            <span className="text-[#6B8E23]">Added by: </span>
+            <span className="text-black">{foodItem.username}</span>
+          </p>
+          <p className="font-dmSans">
+            <span className="text-[#6B8E23]">Description/Notes: </span>
+            <span className="text-black">{foodItem.notes}</span>
           </p>
         </div>
         <div className="mt-10">

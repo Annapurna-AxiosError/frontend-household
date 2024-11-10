@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { SearchNormal1 } from 'iconsax-react';
+import { useEffect, useState } from 'react';
 
 // Fix for default markers
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,84 +13,30 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Sample data
-const locations = [
-  {
-    posting_id: 1,
-    campaign_title: 'Food Donation Drive',
-    campaign_description: 'Providing meals for the homeless.',
-    food_type: 'Cooked Meals',
-    food_category: 'Vegetarian',
-    total_quantity: 500,
-    quantity_unit: 'Plates',
-    estimated_servings: 500,
-    dietary_restrictions: 'None',
-    food_condition: 'Fresh',
-    preparation_date: '2023-10-01',
-    availability_start_time: '2023-10-01T08:00:00Z',
-    availability_end_time: '2023-10-01T18:00:00Z',
-    pickup_location: 'Community Center',
-    latitude: 19.2183,
-    longitude: 72.9769,
-    pickup_type: 'Walk-in',
-    posting_status: 'Active',
-    created_at: '2023-09-25T12:00:00Z',
-    updated_at: '2023-09-30T12:00:00Z',
-    NGO_id: 1,
-  },
-  {
-    posting_id: 2,
-    campaign_title: 'Grocery Distribution',
-    campaign_description: 'Distributing groceries to families in need.',
-    food_type: 'Groceries',
-    food_category: 'Mixed',
-    total_quantity: 1000,
-    quantity_unit: 'Bags',
-    estimated_servings: 1000,
-    dietary_restrictions: 'None',
-    food_condition: 'Good',
-    preparation_date: '2023-10-02',
-    availability_start_time: '2023-10-02T09:00:00Z',
-    availability_end_time: '2023-10-02T17:00:00Z',
-    pickup_location: 'Local Market',
-    latitude: 19.2170,
-    longitude: 72.9800,
-    pickup_type: 'Drive-through',
-    posting_status: 'Active',
-    created_at: '2023-09-26T12:00:00Z',
-    updated_at: '2023-09-30T12:00:00Z',
-    NGO_id: 2,
-  },
-  {
-    posting_id: 3,
-    campaign_title: 'Fruit Distribution',
-    campaign_description: 'Providing fresh fruits to children.',
-    food_type: 'Fruits',
-    food_category: 'Fresh',
-    total_quantity: 300,
-    quantity_unit: 'Kgs',
-    estimated_servings: 300,
-    dietary_restrictions: 'None',
-    food_condition: 'Fresh',
-    preparation_date: '2023-10-03',
-    availability_start_time: '2023-10-03T10:00:00Z',
-    availability_end_time: '2023-10-03T16:00:00Z',
-    pickup_location: 'School',
-    latitude: 19.2195,
-    longitude: 72.9754,
-    pickup_type: 'Walk-in',
-    posting_status: 'Active',
-    created_at: '2023-09-27T12:00:00Z',
-    updated_at: '2023-09-30T12:00:00Z',
-    NGO_id: 3,
-  },
-];
-
 export default function MapView() {
+  const [locations, setLocations] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
+  useEffect(() => {
+    async function fetchCampaigns() {
+      try {
+        const response = await axios.get('https://annapurna.arnabbhowmik019.workers.dev/v1/ngo/campaigns');
+        setLocations(JSON.stringify(response.data.results));
+        localStorage.setItem("locations", JSON.stringify(response.data.results));
+        setLocations(localStorage.getItem("locations"));
+         
+
+      } catch (error) {
+        console.error('Error fetching campaigns:', error);
+      }
+    }
+    fetchCampaigns();
+  }, []);
+  //object to list 
+  const locationss = JSON.parse(localStorage.getItem("locations"));
+  
   const handleSearch = async () => {
     try {
       const response = await axios.get('https://api.opencagedata.com/geocode/v1/json', {
@@ -161,8 +107,8 @@ export default function MapView() {
       {/* Map */}
       <div className="h-3/4 w-full">
         <MapContainer
-          center={[19.2183, 72.9769]}
-          zoom={14}
+          center={[19.0760, 72.8777]}
+          zoom={10}
           className="h-full w-full"
           zoomControl={false}
         >
@@ -170,7 +116,7 @@ export default function MapView() {
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           />
-          {locations.map((location) => (
+          {locationss.map((location) => (
             location.latitude && location.longitude && (
               <Marker
                 key={location.posting_id}

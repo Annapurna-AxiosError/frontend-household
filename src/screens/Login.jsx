@@ -1,14 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import Logo from "../assets/AnnapurnaLogo.svg";
-import LoginImage from "../assets/LoginImage.svg"
+// import LoginImage from "../assets/LoginImage.svg"
 
 export default function Login() {
-  const navigate = useNavigate();
-
+  
+  const serverUrl = "http://localhost:5173";
   const submit = () => {
-    navigate('/get-started');
-  };
-
+    window.location.href = `https://small-mouse-2759.arnabbhowmik019.workers.dev/google/auth?redirect_url=${serverUrl}/callback`;
+  }
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-16 p-4">
       <div className="flex flex-col w-full h-44 items-center align-middle justify-end">

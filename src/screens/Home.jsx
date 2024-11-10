@@ -1,29 +1,56 @@
-import React, { useState } from 'react';
+import {useEffect, useState } from 'react';
 import EmptyList from "../components/EmptyList";
 import FoodList from "../components/FoodList";
 import { Add } from 'iconsax-react';
 import dummyData from "../constants/dummyFood"; // Import the dummy data
-
+import axios from 'axios';
 export default function Home() {
   const [foodList, setFoodList] = useState(dummyData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [quality, setQuality] = useState('');
+  
+  const [category, setCategory] = useState('');
+  const [notes, setNotes] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
 
   const handleAddFood = (newFood) => {
-    setFoodList([...foodList, newFood]);
+    console.log(newFood);
+    async function addFood() { 
+    const response=await axios.post('https://annapurna.arnabbhowmik019.workers.dev/v1/household/product', {"name":newFood.name, 
+      "quantity":newFood.quantity,
+    "category": newFood.category,
+  "notes": newFood.notes,
+"expiry_date":newFood.expiryDate }, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+    console.log(response);
+  }
+    addFood();
+
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleAddFood({ name, quantity, quality, userImage: dummyData[0].userImage });
+    handleAddFood({ name, quantity, category, notes, expiryDate });
     setIsModalOpen(false);
     setName('');
     setQuantity('');
-    setQuality('');
+    setCategory('');
+    setNotes('');
+    setExpiryDate('');
   };
-
+  if(localStorage.getItem("token")===null){
+    window.location.href="/login";
+  } 
+  useEffect(() => {
+    async function fetchFoodList() {
+      // Fetch the food list from the server
+      const response=await axios.get('https://annapurna.arnabbhowmik019.workers.dev/v1/household/all-product', { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+      console.log(response);
+      setFoodList(response.data);
+    }
+    fetchFoodList();
+    }, []);
+    
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <h1 className="text-left font-dmSans font-bold text-3xl pl-4 pb-6">Your Family</h1>
@@ -62,12 +89,41 @@ export default function Home() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 font-dmSans">Quality</label>
+                <label className="block text-gray-700 font-dmSans">Category</label>
+                <select
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  required
+                >
+                  <option value="">Select a category</option>
+                  <option value="Dairy">Dairy</option>
+                  <option value="Vegetables">Vegetables</option>
+                  <option value="Fruits">Fruits</option>
+                  <option value="Grains">Grains</option>
+                  <option value="Meat">Meat</option>
+                  <option value="Packaged">Packaged</option>
+                  <option value="Other">Other</option>
+                  <option value="cooked">Cooked</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-dmSans">Notes</label>
                 <input
                   type="text"
                   className="w-full p-2 border border-gray-300 rounded"
-                  value={quality}
-                  onChange={(e) => setQuality(e.target.value)}
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-dmSans">Expiry Date</label>
+                <input
+                  type="text"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={expiryDate}
+                  onChange={(e) => setExpiryDate(e.target.value)}
                   required
                 />
               </div>

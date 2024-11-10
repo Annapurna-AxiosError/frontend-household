@@ -21,9 +21,12 @@ import Locate from "../screens/Locate";
 
 import FoodDetails from "../screens/FoodDetails";
 
+import Callback from "../screens/Callback";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
+      <Route path="callback" Component={Callback} />
       <Route path="login" Component={Login} />
       <Route path="logout" Component={Logout} />
 

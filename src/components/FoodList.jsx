@@ -1,13 +1,22 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import dummyData from '../constants/dummyFood'; // Adjust the path as necessary
 
-export default function FoodList() {
+export default function FoodList({ items }) {
   const navigate = useNavigate();
+  const [filteredItems, setFilteredItems] = useState([]);
 
-  // Convert the dummy data object into an array
-  const items = Object.values(dummyData);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userFamilyId = user?.current_family_id;
+
+    if (userFamilyId) {
+      const filtered = Object.values(items).filter(item => item.current_family_id === userFamilyId);
+      setFilteredItems(filtered);
+      //save filtered array in localstorage
+      localStorage.setItem('filteredItems', JSON.stringify(filtered));
+    }
+  }, [items]);
 
   const handleCardClick = (index) => {
     navigate(`/food/${index}`);
@@ -15,15 +24,14 @@ export default function FoodList() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      {items.map((item, index) => (
+      {filteredItems.map((item, index) => (
         <div key={index} className="bg-background shadow-md rounded-lg overflow-hidden flex h-32 cursor-pointer" onClick={() => handleCardClick(index)}>
           <div className="w-1/3">
-            <img src={item.userImage} alt={item.name} className="w-full h-full object-cover" />
+            <img src={item.google_pic} alt={item.food_name} className="w-full h-full object-cover" />
           </div>
           <div className="w-2/3 p-4 flex flex-col justify-center items-end">
-            <h2 className="text-xl font-marcellus text-primary">{item.name}</h2>
-            <p className="text-darkGreen">{item.quantity}</p>
-            <p className="text-darkSlate">{item.quality}</p>
+            <h3 className="text-lg font-bold">{item.food_name}</h3>
+            <p className="text-gray-600">{item.category}</p>
           </div>
         </div>
       ))}
