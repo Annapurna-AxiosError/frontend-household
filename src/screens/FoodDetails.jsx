@@ -13,8 +13,10 @@ export default function FoodDetails() {
   useEffect(() => {
     async function fetchRecipie() {
       try {
-        const response = await axios.post("https://resume-screening-2.onrender.com/recipie", { "food_item": foodItem.food_name, "quantity": foodItem.quantity });
-        setRecipies(JSON.parse(response.data));
+        const response = await axios.post("https://resume-screening-2.onrender.com/recipie", { "food_item": foodItem.food_name, "quantity": foodItem.quantity.toString() });  
+        localStorage.setItem("recipies", JSON.stringify(response.data.recipe));
+        console.log(localStorage.getItem("recipies"));
+        
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
@@ -25,7 +27,7 @@ export default function FoodDetails() {
     }
   }, [foodItem]);
   if (!foodItem) {
-    return <div>Food item not found</div>;
+    return <div>Bread Rolls </div>;
   }
 
   return (
@@ -58,7 +60,7 @@ export default function FoodDetails() {
         <div className="mt-10">
           <h2 className="text-2xl font-bold text-[#6B8E23]">Recipes</h2>
           {foodItem.recipes && foodItem.recipes.length > 0 ? (
-            foodItem.recipes.map((recipe, index) => (
+            recipies.map((recipe, index) => (
               <div key={index} className="mt-4 p-4 border rounded-lg shadow-sm">
                 <h3 className="text-xl font-bold text-[#6B8E23]">{recipe.title}</h3>
                 <p className="font-dmSans mb-2">{recipe.description}</p>

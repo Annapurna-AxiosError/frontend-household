@@ -12,10 +12,13 @@ const Header = () => {
     setGoogle_pic(user.data.google_pic);
     localStorage.setItem("user", JSON.stringify(user.data));
     localStorage.setItem("google_pic", user.data.google_pic);
-    
+    const loc = await axios.get('https://annapurna.arnabbhowmik019.workers.dev/v1/ngo/campaigns');
+        
+        localStorage.setItem("locations", JSON.stringify(loc.data.results));
     }
     getGooglePic();
   }, []);
+        
 
   return (
     <header className="h-16 flex items-center justify-between bg-white p-4">

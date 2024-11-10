@@ -38,9 +38,11 @@ export default function Home() {
     setNotes('');
     setExpiryDate('');
   };
+  useEffect(() => {
   if(localStorage.getItem("token")===null){
     window.location.href="/login";
   } 
+  }, []);
   useEffect(() => {
     async function fetchFoodList() {
       // Fetch the food list from the server
